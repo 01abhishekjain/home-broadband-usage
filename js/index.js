@@ -224,87 +224,47 @@ var parser_1 = {
         return el;
     },
     getLandline: function (source) {
-        var elem = source.querySelector('.Dslaccount span');
+        var elem = source.querySelector('#dslID');
         if (!elem) return 0;
-        var landline = elem.innerHTML;
+        var landline = elem.value;
         landline = landline.replace(/[^0-9]/gi, '');
         return landline;
-
     },
     getTotalMonthly: function (source) {
-        var elem = source.querySelector('.DatablockSectionSecond h3 span');
-        if (!elem) return 0;
-        var number = elem.innerHTML;
-        // number = number.replace(/[^0-9]/gi, '');
-        number = number.toLowerCase().replace("gb", "");
-        number = parseFloat(number);
-        return number;
+        var elem = source.querySelector('#totalQuotaInGB');
+        return elem ? parseFloat(elem.value) : 0;
     },
     getRemaining: function (source) {
-        var elem = source.querySelector('.DatablockSectionSecond h3');
-        if (!elem) return 0;
-        var consumed = elem.innerHTML;
-        // consumed = consumed.substr(0, consumed.indexOf("GB"));
-        consumed = consumed.toLowerCase().replace("gb", "");
-        consumed = parseFloat(consumed);
-        return consumed;
+        var elem = source.querySelector('input[name="balanceQuotaInGB"]');
+        return elem ? parseFloat(elem.value) : 0;
     },
     getDaysLeft: function (source) {
-        var elem = source.querySelector('.DatablockSectionThird p');
-        if (!elem) return 0;
-        var daysLeft = elem.innerHTML;
-        daysLeft = parseFloat(daysLeft);
-        daysLeft++; // add today also
-        return daysLeft;
+        var elem = source.querySelector('input[name="remainingDays"]');
+        return elem ? parseFloat(elem.value) + 1 : 0; // add today also
     },
     getQuotaPlan: function (source) {
-        var elem = source.querySelector('.planDataBox ul li:nth-child(1) span');
-        if (!elem) return 0;
-        var quotaPlan = elem.innerHTML;
-        // quotaPlan = quotaPlan.replace(/[^0-9]/gi, '');
-        quotaPlan = quotaPlan.toLowerCase().replace("gb", "");
-        quotaPlan = parseFloat(quotaPlan);
-        return quotaPlan;
+        var elem = source.querySelector('input[name="currentQuotaInGB"]');
+        return elem ? parseFloat(elem.value) : 0;
     },
     getQuotaTopUp: function (source) {
-        var elem = source.querySelector('.data-blockSectionSecond ul li:nth-child(2) span');
-        if (!elem) return 0;
-        var quotaTopUp = elem.innerHTML;
-        // quotaTopUp = quotaTopUp.replace(/[^0-9]/gi, '');
-        quotaTopUp = quotaTopUp.toLowerCase().replace("gb", "");
-        quotaTopUp = parseFloat(quotaTopUp);
-        return quotaTopUp;
+        var elem = source.querySelector('input[name="gbtQuotaInGB"]');
+        return elem ? parseFloat(elem.value) : 0;
     },
     getQuotaCarryOver: function (source) {
         var elem = source.querySelector('input[name="bcCarryOverQuota"]');
         return elem ? parseFloat(elem.value) : 0;
     },
     getQuotaMyHome: function (source) {
-        var elem = source.querySelector('.planDataBox ul li:nth-child(2) span');
-        if (!elem) return 0;
-        var quotaMyHome = elem.innerHTML;
-        // quotaMyHome = quotaMyHome.replace(/[^0-9]/gi, '');
-        quotaMyHome = quotaMyHome.toLowerCase().replace("gb", "");
-        quotaMyHome = parseFloat(quotaMyHome);
-        return quotaMyHome;
+        var elem = source.querySelector('input[name="aoQuotaInGB"]');
+        return elem ? parseFloat(elem.value) : 0;
     },
     getQuotaSmartbytes: function (source) {
-        var elem = source.querySelector('.planDataBox ul li:nth-child(4) span');
-        if (!elem) return 0;
-        var quotaSmartbytes = elem.innerHTML;
-        // quotaSmartbytes = quotaSmartbytes.replace(/[^0-9]/gi, '');
-        quotaSmartbytes = quotaSmartbytes.toLowerCase().replace("gb", "");
-        quotaSmartbytes = parseFloat(quotaSmartbytes);
-        return quotaSmartbytes;
+        var elem = source.querySelector('input[name="sbQuotaRepl"]');
+        return elem ? parseFloat(elem.value) : 0;
     },
     getQuotaDataPack: function (source) {
-        var elem = source.querySelector('.planDataBox ul li:nth-child(5) span');
-        if (!elem) return 0;
-        var quotaDataPack = elem.innerHTML;
-        // quotaDataPack = quotaDataPack.replace(/[^0-9]/gi, '');
-        quotaDataPack = quotaDataPack.toLowerCase().replace("gb", "");
-        quotaDataPack = parseFloat(quotaDataPack);
-        return quotaDataPack;
+        var elem = source.querySelector('input[name="rsbQuotaInGB"]');
+        return elem ? parseFloat(elem.value) : 0;
     }
 
 };
@@ -502,8 +462,9 @@ var show = {
     },
     setProgressBar: function (data) {
         setTimeout(function () {
-            document.querySelector('#p1').MaterialProgress.setProgress(data.usedPercent);
-        }, 500);
+            if (document.querySelector('#p1'))
+                document.querySelector('#p1').MaterialProgress.setProgress(data.usedPercent);
+        }, 2000);
     },
     setQuotaInfo: function (data) {
         document.getElementById('i_quota_plan').innerHTML = data.quota_plan;

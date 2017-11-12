@@ -81,7 +81,7 @@
 
         .extra-text {
             border-top: 1px solid #EEEEEE;
-            font-family: monospace;
+            /* font-family: monospace; */
             padding: 20px 16px 0px 16px;
         }
 
@@ -121,6 +121,17 @@
             font-weight: lighter;
             font-size: smaller;
             border: 1px solid white;
+        }
+
+        .label {
+            color: #bdbdbd;
+            width: 40%;
+            display: inline-block
+        }
+
+        .value {
+            width: 40%;
+            display: inline-block;
         }
     </style>
 </head>
@@ -191,7 +202,7 @@
                     <li class="mdl-menu__item">Top-up Quota:
                         <span id="i_quota_topUp"></span>
                     </li>
-                    <li class="mdl-menu__item">myHome:
+                    <li class="mdl-menu__item">My Home Quota:
                         <span id="i_quota_myHome"></span>
                     </li>
                     <li class="mdl-menu__item">Smartbytes Quota:
@@ -204,20 +215,33 @@
                         <span id="i_quota_carryOver"></span>
                     </li>
                 </ul>
-                <p>Landline:
-                    <span id="i_landline"></span>
+                <p>
+                    <span class="label">Landline:</span>
+                    <span class="value" id="i_landline"></span>
                 </p>
-                <p>Monthly Allowance:
-                    <span id="i_totalMonthly"></span>GB</p>
-                <p>Data Left:
-                    <span id="i_dataRemaining"></span>GB</p>
-                <p>Average Usage:
-                    <span id="i_average"></span>GB per day</p>
-                <p>Days Left:
-                    <span id="i_daysLeft"></span>
+                <p>
+                    <span class="label">Monthly Data:</span>
+                    <span class="value">
+                        <span id="i_totalMonthly"></span> GB</span>
+                </p>
+                <p>
+                    <span class="label">Data Left:</span>
+                    <span class="value">
+                        <span id="i_dataRemaining"></span> GB</span>
+                </p>
+                <p>
+                    <span class="label">Average Usage:</span>
+                    <span class="value">
+                        <span id="i_average"></span> GB per day</span>
+                </p>
+                <p>
+                    <span class="label">Days Left:</span>
+                    <span class="value" id="i_daysLeft"></span>
                 </p>
                 <p>Bill cycle begins on day
-                    <span id="i_billCycleDate"></span> of each month.</p>
+                    <span>
+                        <span id="i_billCycleDate" style=""></span> of each month.</span>
+                </p>
             </div>
             <!-- ad button bottom -->
             <div class="mdl-card__actions mdl-card--border">

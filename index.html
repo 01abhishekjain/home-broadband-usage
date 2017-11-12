@@ -1,0 +1,253 @@
+<!DOCTYPE html>
+<!--
+    Licensed to the Apache Software Foundation (ASF) under one
+    or more contributor license agreements.  See the NOTICE file
+    distributed with this work for additional information
+    regarding copyright ownership.  The ASF licenses this file
+    to you under the Apache License, Version 2.0 (the
+    "License"); you may not use this file except in compliance
+    with the License.  You may obtain a copy of the License at
+
+    http://www.apache.org/licenses/LICENSE-2.0
+
+    Unless required by applicable law or agreed to in writing,
+    software distributed under the License is distributed on an
+    "AS IS" BASIS, WITHOUT WARRANTIES OR CONDITIONS OF ANY
+     KIND, either express or implied.  See the License for the
+    specific language governing permissions and limitations
+    under the License.
+-->
+<html>
+
+<head>
+    <meta name="format-detection" content="telephone=no">
+    <meta name="msapplication-tap-highlight" content="no">
+    <meta name="viewport" content="user-scalable=no, initial-scale=1, maximum-scale=1, minimum-scale=1, width=device-width">
+    <link rel="stylesheet" type="text/css" href="css/index.css">
+    <title>Home Broadband Usage</title>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/icon?family=Material+Icons">
+    <link rel="stylesheet" href="css/material.indigo-pink.min.css">
+    <script src="js/material.min.js"></script>
+    <script type="text/javascript" src="js/index.js"></script>
+    <!-- Square card -->
+    <style>
+        .demo-card-square.mdl-card {
+            width: 95%;
+        }
+
+        .demo-card-square>.mdl-card__title {
+            color: #fff;
+        }
+
+        .text-green {
+            color: #4CAF50
+        }
+
+        .text-orange {
+            color: #ff9800
+        }
+
+        .text-red {
+            color: #f44336
+        }
+
+        .background-green {
+            background: : #4CAF50
+        }
+
+        .background-orange {
+            background: : #ff9800
+        }
+
+        .background-red {
+            background: : #f44336
+        }
+
+        .tag-line {
+            background: #FAFAFA;
+            /*box-shadow: 0px 2px 4px 0px lightgrey;*/
+            text-align: center;
+            text-transform: uppercase
+        }
+
+        .my-fab {
+            position: fixed;
+            bottom: 0px;
+            right: 0px;
+            margin: 5%;
+            box-shadow: 0px 4px 10px 0px #9E9E9E;
+            z-index: 999;
+        }
+
+        .extra-text {
+            border-top: 1px solid #EEEEEE;
+            font-family: monospace;
+            padding: 20px 16px 0px 16px;
+        }
+
+        .extra-text button {
+            float: right;
+            top: 6px;
+        }
+
+        .extra-text p {
+            line-height: 6px;
+        }
+
+        .extra-text p:last-child {
+            font-family: sans-serif;
+            font-style: italic;
+            text-align: center;
+            padding-top: 10px;
+        }
+
+        .error {
+            background-image: url(img/sad.svg);
+            background-repeat: no-repeat;
+            height: 100%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-position: 50% 25%;
+            text-align: center;
+            opacity: 0.6;
+            width: 70%;
+            align-self: center;
+        }
+
+        .ad {
+            color: white;
+            text-transform: capitalize;
+            font-weight: lighter;
+            font-size: smaller;
+            border: 1px solid white;
+        }
+    </style>
+</head>
+
+<body style="-webkit-tap-highlight-color: rgba(0,0,0,0);background: #f5f5f5;">
+    <!-- Always shows a header, even in smaller screens. -->
+    <div class="mdl-layout mdl-js-layout mdl-layout--fixed-header">
+        <header class="mdl-layout__header">
+            <div class="mdl-layout__header-row" style="padding-left: 25px;">
+                <!-- Title -->
+                <span class="mdl-layout-title">Home Broadband Usage</span>
+                <!-- Add spacer, to align navigation to the right -->
+                <div class="mdl-layout-spacer"></div>
+                <!-- Right aligned menu below button -->
+                <button id="demo-menu-lower-right" class="mdl-button mdl-js-button mdl-button--icon">
+                    <i class="material-icons">more_vert</i>
+                </button>
+                <ul class="mdl-menu mdl-menu--bottom-right mdl-js-menu mdl-js-ripple-effect" for="demo-menu-lower-right">
+                    <li class="mdl-menu__item" onclick="anal.btnEvent('rating'); cordova && cordova.plugins.market.open('com.airtel.smartbytes');"
+                        style="color: rgba(0, 0, 0, 0.870588);text-decoration: none;">
+                        Rate this app
+                    </li>
+                    <li class="mdl-menu__item" onclick="anal.btnEvent('mail');">
+                        <a href="mailto:01abhishekjain@gmail.com?subject=Home Broadband Usage Feedback" style="color: rgba(0, 0, 0, 0.870588);text-decoration: none;">
+                            Mail me
+                        </a>
+                    </li>
+                    <li class="mdl-menu__item" onclick="anal.btnEvent('showInterstitialAd_1'); showInterstitialAd()">Show Ad</li>
+                </ul>
+            </div>
+        </header>
+
+
+        <!-- MDL Spinner Component -->
+        <div class="mdl-spinner mdl-js-spinner is-active" style="position: fixed; top: 45%; right: 45%;" id="main-spinner"></div>
+        <!-- sad -->
+        <div class="error" id="main-error" style="display: none;">
+        </div>
+        <!-- Card -->
+        <div class="demo-card-square mdl-card mdl-shadow--2dp" style="align-self: center;margin-top: 3%;overflow: scroll; display: none;"
+            id='main-card'>
+            <!-- used percent -->
+            <div class="mdl-card__title mdl-card--expand">
+                <h2 class="mdl-card__title-text" id="i_usedPercent"></h2>
+            </div>
+            <!-- ad button top -->
+            <div class="mdl-card__menu">
+                <button class="mdl-button mdl-button--icon mdl-js-button mdl-js-ripple-effect ad" onclick="anal.btnEvent('showInterstitialAd_2'); showInterstitialAd()">
+                    ad
+                </button>
+            </div>
+            <!-- MDL Progress Bar with Indeterminate Progress -->
+            <div id="p1" class="mdl-progress mdl-js-progress"></div>
+            <div class="mdl-card__supporting-text" style="padding-bottom: 5%;">
+                <div class="tag-line">
+                    <p id="i_tagLine"></p>
+                </div>
+                <span id="i_explain"></span>
+            </div>
+            <div class="mdl-card__supporting-text extra-text">
+                <button id="allowance-detail" class="mdl-button mdl-js-button mdl-button--icon">
+                    <i class="material-icons">more_horizontal</i>
+                </button>
+                <ul class="mdl-menu mdl-menu--top-right mdl-js-menu allowance-detail" data-mdl-for="allowance-detail">
+                    <li class="mdl-menu__item">Plan Quota:
+                        <span id="i_quota_plan"></span>
+                    </li>
+                    <li class="mdl-menu__item">Top-up Quota:
+                        <span id="i_quota_topUp"></span>
+                    </li>
+                    <li class="mdl-menu__item">myHome:
+                        <span id="i_quota_myHome"></span>
+                    </li>
+                    <li class="mdl-menu__item">Smartbytes Quota:
+                        <span id="i_quota_smartBytes"></span>
+                    </li>
+                    <li class="mdl-menu__item">Data Pack:
+                        <span id="i_quota_dataPack"></span>
+                    </li>
+                </ul>
+                <p>Landline:
+                    <span id="i_landline"></span>
+                </p>
+                <p>Monthly Allowance:
+                    <span id="i_totalMonthly"></span>GB</p>
+                <p>Data Left:
+                    <span id="i_dataRemaining"></span>GB</p>
+                <p>Average Usage:
+                    <span id="i_average"></span>GB per day</p>
+                <p>Days Left:
+                    <span id="i_daysLeft"></span>
+                </p>
+                <p>Bill cycle begins on day
+                    <span id="i_billCycleDate"></span> of each month.</p>
+            </div>
+            <!-- ad button bottom -->
+            <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick="anal.btnEvent('checkSpeed'); setCard('speed-card')">
+                    Speed Test
+                </a>
+            </div>
+        </div>
+
+        <div class="demo-card-square mdl-card mdl-shadow--2dp" style="align-self: center;margin-top: 3%;overflow: scroll; display: none;"
+            id="speed-card">
+            <div>
+                <iframe src="https://www.bing.com/widget/t/speedtest" frameborder="0" style="height:650px;"></iframe>
+            </div>
+            <!-- ad button bottom -->
+            <div class="mdl-card__actions mdl-card--border">
+                <a class="mdl-button mdl-button--colored mdl-js-button mdl-js-ripple-effect" onclick="anal.btnEvent('checkUsage_1'); setCard('main-card')">
+                    Check Usage
+                </a>
+            </div>
+        </div>
+        <!-- refresh usage button -->
+        <button class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored my-fab" onclick="anal.btnEvent('refresh'); refresh();"
+            id="refresh-btn">
+            <i class="material-icons">refresh</i>
+        </button>
+        <!-- go back button -->
+        <button style="display: none;" class="mdl-button mdl-js-button mdl-button--fab mdl-js-ripple-effect mdl-button--colored my-fab"
+            onclick="anal.btnEvent('checkUsage_2'); setCard('main-card')" id="back-btn">
+            <i class="material-icons">arrow_back</i>
+        </button>
+    </div>
+    <script type="text/javascript" src="cordova.js"></script>
+</body>
+
+</html>

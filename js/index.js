@@ -172,6 +172,7 @@ function reqListener() {
 
         data.quota_plan = parser.getQuotaPlan(source);
         data.quota_topUp = parser.getQuotaTopUp(source);
+        data.quota_carryOver = parser.getQuotaCarryOver(source);
         data.quota_myHome = parser.getQuotaMyHome(source);
         data.quota_smartBytes = parser.getQuotaSmartbytes(source);
         data.quota_dataPack = parser.getQuotaDataPack(source);
@@ -274,6 +275,10 @@ var parser_1 = {
         quotaTopUp = parseFloat(quotaTopUp);
         return quotaTopUp;
     },
+    getQuotaCarryOver: function (source) {
+        var elem = source.querySelector('input[name="bcCarryOverQuota"]');
+        return elem ? parseFloat(elem.value) : 0;
+    },
     getQuotaMyHome: function (source) {
         var elem = source.querySelector('.planDataBox ul li:nth-child(2) span');
         if (!elem) return 0;
@@ -363,7 +368,7 @@ var parser_2 = {
 
 var utility = {
     getTotalMonthlyByAdding: function (data) {
-        var totalMonthly = data.quota_plan + data.quota_topUp + data.quota_myHome + data.quota_smartBytes + data.quota_dataPack;
+        var totalMonthly = data.quota_plan + data.quota_topUp + data.quota_myHome + data.quota_smartBytes + data.quota_dataPack + data.quota_carryOver;
         return totalMonthly;
     },
     getBillCycleDate: function (daysLeft) {
@@ -462,11 +467,11 @@ var show = {
                 el.classList.add('text-green');
                 break;
             case -1:
-                el.innerHTML = "You\'re going too fast!"
+                el.innerHTML = "You\'re going too fast!";
                 el.classList.add('text-red');
                 break;
             case 0:
-                el.innerHTML = "Walking on razor\'s edge"
+                el.innerHTML = "Walking on razor\'s edge";
                 el.classList.add('text-orange');
                 break;
         }
@@ -475,13 +480,13 @@ var show = {
         var el = document.getElementById('i_explain');
         switch (this.mode) {
             case 1:
-                el.innerHTML = "If you keep consuming <span style='font-weight:bold;'>" + data.average + "GB</span> per day, the high speed data will run for the entire bill cycle.<br><br>What\'s more? You can go as high as <span style='font-weight:bold;'>" + data.shouldAverage + "GB</span> per day and you still won't run out of high speed data before your data refreshes."
+                el.innerHTML = "If you keep consuming <span style='font-weight:bold;'>" + data.average + "GB</span> per day, the high speed data will run for the entire bill cycle.<br><br>What\'s more? You can go as high as <span style='font-weight:bold;'>" + data.shouldAverage + "GB</span> per day and you still won't run out of high speed data before your data refreshes.";
                 break;
             case -1:
                 el.innerHTML = "If you keep consuming <span style='font-weight:bold;'>" + data.average + "GB per day</span>, you\'ll run out of high speed data in the next <span style='font-weight:bold;'>" + data.predictDays + "</span> days, <span style='font-weight:bold;'>" + (data.daysLeft - data.predictDays) + "</span> days before your data refreshes!<br><br>Bring your average down to <span style='font-weight:bold;'>" + data.shouldAverage + "GB per day</span>, if you wish to keep the high speed data running for the entire bill cycle.";
                 break;
             case 0:
-                el.innerHTML = "At the current rate of <span style='font-weight:bold;'>" + data.average + "GB</span> per day, your high speed data will barely last till the end of this bill cycle.<br><br>Don\'t increase your daily average, or you\'ll run out of high speed data earlier."
+                el.innerHTML = "At the current rate of <span style='font-weight:bold;'>" + data.average + "GB</span> per day, your high speed data will barely last till the end of this bill cycle.<br><br>Don\'t increase your daily average, or you\'ll run out of high speed data earlier.";
                 break;
         }
     },
@@ -506,6 +511,7 @@ var show = {
         document.getElementById('i_quota_myHome').innerHTML = data.quota_myHome;
         document.getElementById('i_quota_smartBytes').innerHTML = data.quota_smartBytes;
         document.getElementById('i_quota_dataPack').innerHTML = data.quota_dataPack;
+        document.getElementById('i_quota_carryOver').innerHTML = data.quota_carryOver;
     },
     setContents: function (state, errMsg) {
         if (!errMsg) errMsg = "Couldn\'t fetch data. Please check that you are connected to a working Airtel Broadband connection.";
@@ -537,11 +543,11 @@ var show = {
 var anal = {
     btnEvent: function (btn) {
         // window.FirebasePlugin && window.FirebasePlugin.logEvent("select_content", {content_type: "button", item_id: btn});
-        window.FirebasePlugin && window.FirebasePlugin.logEvent("btn_" + btn, { content_type: "btn_" + btn, item_id: "btn_" + btn });
+        if (window.FirebasePlugin) window.FirebasePlugin.logEvent("btn_" + btn, { content_type: "btn_" + btn, item_id: "btn_" + btn });
     },
     syncEvent: function (status) {
         // window.FirebasePlugin && window.FirebasePlugin.logEvent("sync_status", {content_type: "status", item_id: status});
-        window.FirebasePlugin && window.FirebasePlugin.logEvent("sync_" + status, { content_type: "sync_" + status, item_id: "sync_" + status });
+        if (window.FirebasePlugin) window.FirebasePlugin.logEvent("sync_" + status, { content_type: "sync_" + status, item_id: "sync_" + status });
     }
 };
 
